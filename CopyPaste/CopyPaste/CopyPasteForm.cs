@@ -12,6 +12,8 @@ namespace CopyPaste
 {
     public partial class CopyPasteForm : Form
     {
+        OpenFileDialog dlg;
+        ImageList img;
         public CopyPasteForm()
         {
             InitializeComponent();
@@ -29,12 +31,22 @@ namespace CopyPaste
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+   
+            dlg = new OpenFileDialog();
+            img = new ImageList();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            listView1.Items.Add("sadasd");
+            string a;
+            if ( dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                 ListViewItem item = new ListViewItem(dlg.FileName, 0);
+                img.Images.Add(Icon.ExtractAssociatedIcon(dlg.FileName));
+                listView1.SmallImageList = img;
+               // ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[] { new ListViewItem.ListViewSubItem(item,Icon.ExtractAssociatedIcon(dlg.FileName)) };
+                listView1.Items.Add(dlg.FileName, img.Images.Count - 1);
+            } 
         }
     }
 }
